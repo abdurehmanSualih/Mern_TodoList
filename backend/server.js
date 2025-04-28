@@ -3,22 +3,20 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
+const todosRouter = require("./routes/todos");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.get("/", (req, res, next) => {
-  res.send("server is working");
-});
+app.use(express.json());
+app.use(cors());
+
+app.use("/todos", todosRouter);
 
 mongoose
-  .connect(
-    `${process.env.MONGO_URI}`
-  )
+  .connect(`${process.env.MONGO_URI}`)
   .then(() => {
     console.log("DB connected");
-  })
-  .then(() => {
     app.listen(PORT, () => {
       console.log(`server running on port ${PORT}`);
     });
