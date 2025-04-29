@@ -60,3 +60,20 @@ exports.updateTodos = async (req, res, next) => {
       });
   }
 };
+
+
+exports.deleteTodos = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const todo = await Todos.findOneAndDelete({ _id: id });
+
+    if (!todo) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+
+    res.status(200).json({ message: "Todo deleted successfully", deletedTodo: todo });
+  } catch (error) {
+    res.status(400).json({ error: "An error occurred while deleting the to-do", details: error.message });
+  }
+};
