@@ -2,6 +2,20 @@ const Todos = require("../models/todo");
 
 exports.getTodos = (req, res, next) => {};
 
+exports.getToDos = async (req, res, nest) => {
+  try {
+    const gettodos = await Todos.find();
+    if (!gettodos) {
+      return res.status(401).json({ error: "no data found" });
+    }
+    res.status(200).json(gettodos);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "erroe retraving data", error: error.message });
+  }
+};
+
 exports.addToDos = async (req, res, next) => {
   try {
     const { text } = req.body;
