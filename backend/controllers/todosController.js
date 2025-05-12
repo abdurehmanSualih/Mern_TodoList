@@ -1,7 +1,5 @@
 const Todos = require("../models/todo");
 
-exports.getTodos = (req, res, next) => {};
-
 exports.getToDos = async (req, res, nest) => {
   try {
     const gettodos = await Todos.find();
